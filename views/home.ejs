@@ -1,0 +1,173 @@
+<div class="greeting">
+    <!-- Greeting with User's name if logged in or generic if not  -->
+    <h1 class="lead"><%= greeting %> <%= name%></h1>
+</div>
+<br /><br /><br>
+
+<nav class="navbar">
+    <% if (!loggedIn) { %>
+    <ul class="myUl">
+        <li class="nav-item">
+            <a class="nav-link" href="read">Read</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="about">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="publish">Publish</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users/register">Register</a>
+        </li>
+        <li class="nav-item nav-item-hide">
+            <a class="nav-link" href="/users/login">Login</a>
+        </li>
+    </ul>
+    <% } else { %>
+    <ul class="myUl">
+        <li class="nav-item">
+            <a class="nav-link" href="read">Read</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="about">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="publish">Publish</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users/logout">Logout</a>
+        </li>
+    </ul>
+    <% } %>
+    </div>
+
+    <style>
+        body {
+            background-image: url("/images/typewriter2-min.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .myUl {
+            padding-inline-start: 0% !important;
+            margin-block-start: 0em !important;
+            margin-block-end: 0em !important;
+        }
+
+        .navbar-collapse {
+            text-align: center;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #110f0f;
+            font-size: 1.4em;
+        }
+
+        .nav-link:hover {
+            color: 39, 76, 131;
+            color: #48726b !important;
+        }
+
+        @media (max-width: 800) {
+            .greeting {
+                text-align: center !important;
+                margin: auto !important;
+                float: none !important;
+            }
+        }
+
+
+
+        .logoutSuccess {
+            margin-top: 5em;
+            max-width: 20em;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 3em;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            margin-top: 9em;
+            display: table;
+            font-size: 1.7em;
+            font-family: "typewriter_-_remington_riviRg";
+            font-weight: 900;
+            text-align: center;
+            background-color: white;
+            padding: 1rem;
+            opacity: 0.5;
+            border-radius: 20px;
+            margin-top: 15em;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                font-size: 1.1em;
+                margin-top: 15em;
+            }
+        }
+
+
+        .nav-link {
+            text-decoration: none;
+            color: black;
+        }
+
+        .nav-item {
+            list-style-type: none;
+            margin-top: 0.3em;
+            margin-bottom: 0.3em;
+        }
+
+
+        /* typing effect */
+        .lead {
+            font-family: "typewriter_-_remington_riviRg";
+            font-weight: 500;
+            font-size: 1.5em;
+            /* overflow: hidden; */
+            /* animation: typing 3s steps(30, end); */
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .lead {
+                font-weight: 900;
+                font-size: 0.8em !important;
+                margin-top: 8em !important;
+                text-align: center !important;
+                margin: auto
+            }
+        }
+
+
+        /* @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        } */
+
+        /* Handwriting google font */
+
+        /* @media (max-width: 900px) {
+            #greet {
+                margin-left: -8em;
+            }
+        } */
+    </style>
+    </div>
+</nav>

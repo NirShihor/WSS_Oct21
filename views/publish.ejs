@@ -1,0 +1,160 @@
+<div class='greeting'>
+    <img class="logo" src="images/WSS logo.png" alt="logo">
+    <p class='lead mb-3'> <%= name %></p>
+    <div class="hiddenButton">
+        <a href='/' class='homeButton''>Home Page</a>
+    </div>
+</div>
+<br><br><br><br><br><br><br>
+    <div class=' dashboardCenter'>
+            <h1 class='homeHeading mt-4'>Publish Your Story</h1>
+    </div>
+    <div class="publishMessage">
+        <%- include ('./partials/messages') %>
+    </div>
+
+
+    <div class="storyPublish">
+        <form class="publishFormAtt" action="" method="POST">
+            <label for="Write Your Story"></label>
+            <textarea class="publishForm" name="newStory" cols="30" rows="7" autofocus
+                placeholder="Enter a story between 20 and 250 characters long"></textarea>
+            <br><br>
+            <select class="storyPage" name="genre">
+                <option selected="selected">Select a genre</option>
+                <option value="1">Crime</option>
+                <option value="2">Horror</option>
+                <option value="3">Love</option>
+                <option value="4">Science Fiction</option>
+                <option value="5">Other</option>
+            </select>
+            <br><br>
+            <input type="text" class="autherName" name="auther" placeholder="Your Name (not required)">
+            <br><br>
+            <input class="formButton" type="submit" value="Publish">
+        </form>
+    </div>
+
+    <style>
+        body {
+            background: url("/images/woodbackground2-min.jpg");
+        }
+
+        /* fit whole background image into small screen */
+        @media (max-width: 768px) {
+            body {
+                -webkit-background-size: contain;
+                -moz-background-size: contain;
+                -o-background-size: contain;
+                background-size: contain;
+            }
+        }
+
+
+        /* Drop down story genre selection */
+        .storyPage {
+            height: 3em;
+            font-size: 10em;
+        }
+
+        .publishForm {
+            width: 90%;
+        }
+
+        @media (max-width: 800px) {
+            .storyPage {
+                height: 3em;
+                font-size: 1em;
+            }
+        }
+
+
+        .homeHeading {
+            font-family: 'typewriter_-_remington_riviRg';
+            font-size: 3.5em;
+            margin-top: 1em;
+        }
+
+        .dashboardCenter {
+            margin: auto;
+            text-align: center;
+        }
+
+        .flex-container {
+            margin: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .lead {
+            font-family: 'typewriter_-_remington_riviRg';
+            font-weight: 500;
+            font-size: 1.5em;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn {
+            color: #0a0a0a;
+            font-size: 0.8em;
+            color: cornsilk;
+            width: 8em;
+        }
+
+        @media (max-width: 800px) {
+            .homeHeading {
+                margin-top: 3em !important;
+            }
+        }
+
+        .autherName {
+            width: 20em;
+            height: 3em;
+            border-radius: 0.3em;
+            font-size: 0.8em;
+            margin: 0.2em;
+            padding: 0.2em;
+            border: black;
+            border-style: solid;
+            border-width: 0.1em;
+            padding-left: 1.5em;
+        }
+
+
+        .formButton {
+            margin: auto;
+            height: 2.5em;
+            width: 10em;
+            font-size: 0.8em;
+            cursor: pointer;
+            border-radius: 0.6em;
+        }
+
+
+
+        .homeButton {
+            margin-top: 0em !important;
+        }
+
+        .logo {
+            width: 12rem;
+            left: 5rem;
+            position: absolute;
+            top: 2.5rem;
+        }
+
+        @media (max-width: 800px) {
+            .logo {
+                width: 10rem;
+                left: 1rem;
+                top: 1rem;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .greeting {
+                margin-top: 0.5em !important;
+                padding-right: 2 !important;
+            }
+        }
+    </style>

@@ -1,0 +1,200 @@
+<div class="greeting">
+  <img class="logo" src="/images/WSS logo.png" alt="logo">
+  <div class="hiddenButton">
+    <a href="/" class="homeButton">Home Page</a>
+  </div>
+</div>
+<div class="card">
+  <div class="dashboardCentre">
+    <h1> <i class="fas fa-user homeHeading"></i> Login</h1>
+  </div>
+
+  <div class="outerForm">
+    <%- include ('./partials/messages') %>
+    <form action="/users/login" method="POST">
+      <div class="form">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+      </div>
+      <div class="form">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+      </div>
+      <div class="buttonFrame">
+        <input class="formButton" type="submit"></button>
+      </div>
+    </form>
+  </div>
+  <div class="register">
+    <p class="registerForgot">
+      Don't Have An Account? <a class="login" href="/users/register">Register</a>
+    </p>
+    <p class="registerForgot">
+      Forgot Your Password? <a class="login" href="/users/forgot">Reset</a>
+    </p>
+  </div>
+</div>
+
+<style>
+  body {
+    background: url("/images/woodbackground2-min.jpg");
+    margin-top: -8em !important;
+  }
+
+  /* fit whole background image into small screen */
+  @media (max-width: 768px) {
+    body {
+      -webkit-background-size: contain;
+      -moz-background-size: contain;
+      -o-background-size: contain;
+      background-size: contain;
+    }
+  }
+
+  .heading {
+    text-align: center;
+    margin-top: 16em;
+  }
+
+  .lead {
+    margin-top: 0.5em !important;
+  }
+
+  .card {
+    margin: auto;
+    width: 30%;
+    margin-top: 20em;
+  }
+
+  .outerForm {
+    border: 3px solid green !important;
+    padding: 0.6em 2em 2em 2em;
+    border-radius: 0.5em;
+  }
+
+  .form {
+    width: 100%;
+    text-align: left;
+  }
+
+  input {
+    width: 92%;
+    height: 2.5em;
+    padding-left: 0.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 1em;
+  }
+
+  label {
+    font-size: 1.2em;
+  }
+
+  .formButton {
+    height: 2.5em;
+    width: 10em;
+    font-size: 0.8em;
+    cursor: pointer;
+    border-radius: 0.6em;
+    text-align: center;
+  }
+
+  .regsiterForgot {
+    text-align: left !important;
+  }
+
+  .register {
+    padding-left: 1.5em;
+    font-size: 1.2em;
+    color: #375c1a;
+    font-weight: 900;
+    font-size: 1.3em;
+  }
+
+  .buttonFrame {
+    text-align: center;
+  }
+
+  .login {
+    text-decoration: none;
+    color: #4d4d7c;
+  }
+
+  @media (max-width: 800px) {
+    .heading {
+      margin-top: 4em;
+    }
+  }
+
+
+  @media (max-width: 800px) {
+    .card {
+      width: 24em;
+    }
+  }
+
+  .logo {
+    width: 12rem;
+    left: 5rem;
+    position: absolute;
+    top: 2.5rem;
+  }
+
+  @media (max-width: 800px) {
+    .logo {
+      margin-left: -5rem;
+    }
+  }
+
+  @media (max-width: 600) {
+    .outerForm {
+      max-width: 15rem;
+      ;
+    }
+  }
+
+  @media (max-width: 600) {
+    .register {
+      min-width: 25;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .card {
+      margin-top: 18rem;
+    }
+  }
+
+  .dashboardCentre {
+    text-align: center;
+    margin: auto;
+    margin-top: 10em;
+  }
+
+  @media (max-width: 800px) {
+    .dashboardCentre {
+      margin-top: 30em;
+    }
+  }
+
+
+  .homeHeading {
+    text-align: center !important;
+  }
+
+  .hiddenButton {
+    margin-top: 7em;
+  }
+
+  @media (max-width: 800px) {
+    .greeting {
+      margin-top: 0em !important;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .hiddenButton {
+      margin-top: 7em !important;
+    }
+  }
+</style>
