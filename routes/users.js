@@ -1,48 +1,53 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const passport = require("passport");
-const bcrypt = require("bcryptjs");
-const async = require("async");
-const nodemailer = require("nodemailer");
-const crypto = require("crypto"); //Installation not required. Part of node js.
-const path = require("path");
-require("dotenv").config({ path: path.resolve("routes/.env") });
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const async = require('async');
+// const nodemailer = require("nodemailer");
+const sgMail = require('@sendgrid/mail');
+const crypto = require('crypto'); //Installation not required. Part of node js.
+const path = require('path');
+require('dotenv').config({ path: path.resolve('routes/.env') });
+
+const API_KEY = `${process.env.API_Key}`;
+
+sgMail.setApiKey(API_KEY);
 
 // User model
-const User = require("../models/User");
+const User = require('../models/User');
 
 // Login Page
-router.get("/login", function (req, res) {
-  res.render("login");
+router.get('/login', function (req, res) {
+  res.render('login');
 });
 
 // Register Page
-router.get("/register", function (req, res) {
-  res.render("register");
+router.get('/register', function (req, res) {
+  res.render('register');
 });
 
 // Register Handle
-router.post("/register", function (req, res) {
+router.post('/register', function (req, res) {
   const { name, email, password, password2 } = req.body;
   let errors = [];
 
   // Check required fields
   if (!name || !email || !password || !password2) {
-    errors.push({ msg: "Please fill in all fields" });
+    errors.push({ msg: 'Please fill in all fields' });
   }
   // Check passwords match
   if (password !== password2) {
-    errors.push({ msg: "Passwords do not match" });
+    errors.push({ msg: 'Passwords do not match' });
   }
 
   // Check password length
   if (password.length < 6) {
-    errors.push({ msg: "Password should be at least 6 characters" });
+    errors.push({ msg: 'Password should be at least 6 characters' });
   }
 
   // If there are errors
   if (errors.length > 0) {
-    res.render("register", {
+    res.render('register', {
       errors,
       name,
       email,
@@ -55,8 +60,8 @@ router.post("/register", function (req, res) {
       .then(function (user) {
         //If User exists
         if (user) {
-          errors.push({ msg: "Email already registered" });
-          res.render("register", {
+          errors.push({ msg: 'Email already registered' });
+          res.render('register', {
             errors,
             name,
             email,
@@ -82,10 +87,10 @@ router.post("/register", function (req, res) {
                 .save()
                 .then(function (user) {
                   req.flash(
-                    "success_msg",
-                    "You have been successfully registered and can now log in"
+                    'success_msg',
+                    'You have been successfully registered and can now log in'
                   );
-                  res.redirect("/users/login");
+                  res.redirect('/users/login');
                 })
                 .catch(err, function () {
                   console.log(err);
@@ -98,34 +103,34 @@ router.post("/register", function (req, res) {
 });
 
 // Login Handle
-router.post("/login", function (req, res, next) {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/users/login",
+router.post('/login', function (req, res, next) {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
     failureFlash: true,
   })(req, res, next);
 });
 
 // Logout Handle
-router.get("/logout", async function (req, res, next) {
+router.get('/logout', async function (req, res, next) {
   req.logout();
   // req.flash("success_logout", "You have been logged out");
-  res.redirect("/");
+  res.redirect('/');
   req.session.destroy();
 });
 
 // Forgot Password Page
-router.get("/forgot", function (req, res) {
-  res.render("forgot");
+router.get('/forgot', function (req, res) {
+  res.render('forgot');
 });
 
 // Forgot Password Handle
-router.post("/forgot", function (req, res, next) {
+router.post('/forgot', function (req, res, next) {
   async.waterfall(
     [
       function (done) {
         crypto.randomBytes(20, function (err, buf) {
-          var token = buf.toString("hex");
+          var token = buf.toString('hex');
           done(err, token); //This is where the token gets created
         });
       },
@@ -133,8 +138,8 @@ router.post("/forgot", function (req, res, next) {
         User.findOne({ email: req.body.email }, function (err, user) {
           //Finding a user by their email
           if (!user) {
-            req.flash("error", "No account with that email address exists.");
-            return res.redirect("/users/forgot");
+            req.flash('error', 'No account with that email address exists.');
+            return res.redirect('/users/forgot');
           }
 
           user.resetPasswordToken = token; //If user was found, set resetPasswordTokn to token
@@ -145,61 +150,45 @@ router.post("/forgot", function (req, res, next) {
           });
         });
       },
-      // TEMP
+
       function (token, user, done) {
-        var smtpTransport = nodemailer.createTransport({
-          //createTransport is part of nodemailer
-
-          service: "Gmail",
-          auth: {
-            type: "OAuth2",
-            user: "nirshihor@gmail.com",
-            clientId:
-              "900272838502-8hl5p6i25gjirv5nfon2vm5d10gtokbb.apps.googleusercontent.com",
-            // TEMP
-            clientSecret: process.env.CLIENT_SECRET,
-            refreshToken:
-              "1//04QWrg-UMvH2SCgYIARAAGAQSNwF-L9IrE5hERFy1N5K8dVUSmXdId2Pep_18cK133mMeHAoMOgxl7OWsMIjnYuONAoHyk_ZhgMM",
-          },
-        });
-        var mailOptions = {
-          //mailOption - what the users sees when email sent to them
-
+        const message = {
           to: user.email,
-          from: "nirshihor@gmail.com", //This can be any email you want them to reply to - doesn't need to be sending email
-          subject: "WSS Password Reset",
+          from: 'nirshihor@gmail.com',
+          subject: 'WSS Password Reset',
           text:
-            "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
-            "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
-            "http://" +
+            'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' +
             req.headers.host +
-            "/users/reset/" +
+            '/users/reset/' +
             token +
-            "\n\n" +
-            "If you did not request this, please ignore this email and your password will remain unchanged.\n",
+            '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n',
         };
-        smtpTransport.sendMail(mailOptions, function (err) {
-          console.log("mail sent");
+
+        sgMail.send(message, function (err) {
+          console.log('mail sent');
           req.flash(
-            "success_mail_sent",
-            "If " +
+            'success_mail_sent',
+            'If ' +
               user.email +
-              " is registered in our database, an e-mail has been sent to " +
+              ' is registered in our database, an e-mail has been sent to ' +
               user.email +
-              " with further instructions."
+              ' with further instructions.'
           );
-          done(err, "done");
+          done(err, 'done');
         });
       },
     ],
     function (err) {
       if (err) return next(err);
-      res.redirect("/users/forgot");
+      res.redirect('/users/login');
     }
   );
 });
 
-router.get("/reset/:token", function (req, res) {
+router.get('/reset/:token', function (req, res) {
   User.findOne(
     {
       resetPasswordToken: req.params.token,
@@ -208,18 +197,18 @@ router.get("/reset/:token", function (req, res) {
     function (err, user) {
       if (!user) {
         req.flash(
-          "error_token",
-          "Password reset token is invalid or has expired."
+          'error_token',
+          'Password reset token is invalid or has expired.'
         );
-        return res.redirect("/users/forgot");
+        return res.redirect('/users/forgot');
       } else {
-        res.render("reset", { token: req.params.token });
+        res.render('reset', { token: req.params.token });
       }
     }
   );
 });
 
-router.post("/reset/:token", function (req, res) {
+router.post('/reset/:token', function (req, res) {
   async.waterfall(
     [
       function (done) {
@@ -231,10 +220,10 @@ router.post("/reset/:token", function (req, res) {
           function (err, user) {
             if (!user) {
               req.flash(
-                "error_token",
-                "Password reset token is invalid or has expired."
+                'error_token',
+                'Password reset token is invalid or has expired.'
               );
-              return res.redirect("back");
+              return res.redirect('back');
             } else {
               if (req.body.password === req.body.confirm) {
                 // Hash New Password
@@ -255,16 +244,16 @@ router.post("/reset/:token", function (req, res) {
                     req.logIn(user, function (err) {
                       done(err, user);
                       req.flash(
-                        "success_password_change",
-                        "Your password has been successfully changed."
+                        'success_password_change',
+                        'Your password has been successfully changed.'
                       );
-                      res.redirect("/users/login");
+                      res.redirect('/users/login');
                     });
                   });
                 });
               } else {
-                req.flash("error_passwords_match", "Passwords do not match.");
-                res.render("reset", { token: req.params.token });
+                req.flash('error_passwords_match', 'Passwords do not match.');
+                res.render('reset', { token: req.params.token });
               }
             }
           }
@@ -272,33 +261,33 @@ router.post("/reset/:token", function (req, res) {
       },
       function (user, done) {
         var smtpTransport = nodemailer.createTransport({
-          service: "Gmail",
+          service: 'Gmail',
           auth: {
-            user: "nirshihor@gmail.com",
+            user: 'nirshihor@gmail.com',
             pass: process.env.GMAILPW,
           },
         });
         var mailOptions = {
           to: user.email,
-          from: "nirshihor@mail.com",
-          subject: "Your password has been changed",
+          from: 'nirshihor@mail.com',
+          subject: 'Your password has been changed',
           text:
-            "Hello,\n\n" +
-            "This is a confirmation that the password for your account " +
+            'Hello,\n\n' +
+            'This is a confirmation that the password for your account ' +
             user.email +
-            " has just been changed.\n",
+            ' has just been changed.\n',
         };
         smtpTransport.sendMail(mailOptions, function (err) {
           req.flash(
-            "success_password_change",
-            "Success! Your password has been changed."
+            'success_password_change',
+            'Success! Your password has been changed.'
           );
           done(err);
         });
       },
     ],
     function (err) {
-      res.redirect("/home");
+      res.redirect('/home');
     }
   );
 });

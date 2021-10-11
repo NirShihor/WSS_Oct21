@@ -80,20 +80,20 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 //Before using heroku - server running locally
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+// app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 //server for heroku
-// let port = process.env.PORT;
-// if (port == null || port == '') {
-//   port = 4000;
-// }
+let port = process.env.PORT;
+if (port == null || port == '') {
+  port = 4000;
+}
 
 // APP.LISTEN FOR HTTP
-// app.listen(port, function () {
-//   console.log("Server started successfully");
-// });
+app.listen(port, function () {
+  console.log('Server started successfully');
+});
 
 //APP.LISTEN FOR HTTPS
 // const sslserver = https.createServer(
