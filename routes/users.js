@@ -173,9 +173,7 @@ router.post('/forgot', function (req, res, next) {
             'success_mail_sent',
             'If ' +
               user.email +
-              ' is registered in our database, an e-mail has been sent to ' +
-              user.email +
-              ' with further instructions.'
+              ' is registered in our database, an e-mail has been sent to that address with further instructions'
           );
           done(err, 'done');
         });
