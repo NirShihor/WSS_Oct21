@@ -95,15 +95,15 @@ app.listen(port, function () {
   console.log('Server started successfully');
 });
 
-//APP.LISTEN FOR HTTPS
-// const sslserver = https.createServer(
-//   {
-//     key: fs.readFileSync(path.join(__dirname, 'cert', 'server.key')),
-//     cert: fs.readFileSync(path.join(__dirname, 'cert', 'server.crt')),
-//   },
-//   app
-// );
+// APP.LISTEN FOR HTTPS
+const sslserver = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'server.key')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'server.crt')),
+  },
+  app
+);
 
-// sslserver.listen(port, function () {
-//   console.log('Server started successfully');
-// });
+sslserver.listen(port, function () {
+  console.log('Server started successfully');
+});
