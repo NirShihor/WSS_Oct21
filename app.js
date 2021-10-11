@@ -90,10 +90,10 @@ if (port == null || port == '') {
   port = 4000;
 }
 
-// APP.LISTEN FOR HTTP
-app.listen(port, function () {
-  console.log('Server started successfully');
-});
+// // APP.LISTEN FOR HTTP
+// app.listen(port, function () {
+//   console.log('Server started successfully');
+// });
 
 // APP.LISTEN FOR HTTPS
 const sslserver = https.createServer(
