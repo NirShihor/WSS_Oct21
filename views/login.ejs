@@ -1,12 +1,12 @@
 <div class="greeting">
-  <img class="logo" src="/images/WSS logo.png" alt="logo">
+  <img class="logo" src="/images/WSS logo.png" alt="logo" />
   <div class="hiddenButton">
     <a href="/" class="homeButton">Home Page</a>
   </div>
 </div>
 <div class="card">
   <div class="dashboardCentre">
-    <h1> <i class="fas fa-user homeHeading"></i> Login</h1>
+    <h1><i class="fas fa-user homeHeading"></i> Login</h1>
   </div>
 
   <div class="outerForm">
@@ -14,20 +14,39 @@
     <form action="/users/login" method="POST">
       <div class="form">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          placeholder="Enter Email"
+        />
       </div>
       <div class="form">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          placeholder="Enter Password"
+        />
       </div>
       <div class="buttonFrame">
-        <input class="formButton" type="submit"></button>
+        <button
+          class="formButton smallButton"
+          type="submit"
+          class="btn btn-primary btn-block"
+        >
+          Login
+        </button>
       </div>
     </form>
   </div>
   <div class="register">
     <p class="registerForgot">
-      Don't Have An Account? <a class="login" href="/users/register">Register</a>
+      Don't Have An Account?
+      <a class="login" href="/users/register">Register</a>
     </p>
     <p class="registerForgot">
       Forgot Your Password? <a class="login" href="/users/forgot">Reset</a>
@@ -37,7 +56,7 @@
 
 <style>
   body {
-    background: url("/images/woodbackground2-min.jpg");
+    background: url('/images/woodbackground2-min.jpg');
     margin-top: -8em !important;
   }
 
@@ -126,7 +145,6 @@
     }
   }
 
-
   @media (max-width: 800px) {
     .card {
       width: 24em;
@@ -149,7 +167,6 @@
   @media (max-width: 600) {
     .outerForm {
       max-width: 15rem;
-      ;
     }
   }
 
@@ -176,7 +193,6 @@
       margin-top: 30em;
     }
   }
-
 
   .homeHeading {
     text-align: center !important;

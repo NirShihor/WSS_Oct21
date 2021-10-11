@@ -116,7 +116,7 @@ router.get('/logout', async function (req, res, next) {
   req.logout();
   // req.flash("success_logout", "You have been logged out");
   res.redirect('/');
-  req.session.destroy();
+  req.session = null;
 });
 
 // Forgot Password Page
