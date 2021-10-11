@@ -125,65 +125,60 @@ router.get('/forgot', function (req, res) {
 });
 
 // Forgot Password Handle
-router.post('/forgot', function (req, res, next) {
-  async.waterfall(
-    [
-      function (done) {
-        crypto.randomBytes(20, function (err, buf) {
-          var token = buf.toString('hex');
-          done(err, token); //This is where the token gets created
+router.post('/forgot', async function (req, res, next) {
+  async.waterfall([
+    function (done) {
+      crypto.randomBytes(20, function (err, buf) {
+        var token = buf.toString('hex');
+        done(err, token); //This is where the token gets created
+      });
+    },
+    function (token, done) {
+      User.findOne({ email: req.body.email }, function (err, user) {
+        //Finding a user by their email
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('/users/forgot');
+        }
+
+        user.resetPasswordToken = token; //If user was found, set resetPasswordTokn to token
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiration
+
+        user.save(function (err) {
+          done(err, token, user);
         });
-      },
-      function (token, done) {
-        User.findOne({ email: req.body.email }, function (err, user) {
-          //Finding a user by their email
-          if (!user) {
-            req.flash('error', 'No account with that email address exists.');
-            return res.redirect('/users/forgot');
-          }
+      });
+    },
 
-          user.resetPasswordToken = token; //If user was found, set resetPasswordTokn to token
-          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiration
+    function (token, user, done) {
+      const message = {
+        to: user.email,
+        from: 'nirshihor@gmail.com',
+        subject: 'WSS Password Reset',
+        text:
+          'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' +
+          req.headers.host +
+          '/users/reset/' +
+          token +
+          '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+      };
 
-          user.save(function (err) {
-            done(err, token, user);
-          });
-        });
-      },
-
-      function (token, user, done) {
-        const message = {
-          to: user.email,
-          from: 'nirshihor@gmail.com',
-          subject: 'WSS Password Reset',
-          text:
-            'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://' +
-            req.headers.host +
-            '/users/reset/' +
-            token +
-            '\n\n' +
-            'If you did not request this, please ignore this email and your password will remain unchanged.\n',
-        };
-
-        sgMail.send(message, function (err) {
-          console.log('mail sent');
-          req.flash(
-            'success_mail_sent',
-            'If ' +
-              user.email +
-              ' is registered in our database, an e-mail has been sent to that address with further instructions'
-          );
-          done(err, 'done');
-        });
-      },
-    ],
-    function (err) {
-      if (err) return next(err);
-      res.redirect('/users/login');
-    }
-  );
+      sgMail.send(message, function (err) {
+        console.log('mail sent');
+        req.flash(
+          'success_mail_sent',
+          'If ' +
+            user.email +
+            ' is registered in our database, an e-mail has been sent to that address with further instructions'
+        );
+        res.redirect('/users/login');
+        done(err, 'done');
+      });
+    },
+  ]);
 });
 
 router.get('/reset/:token', function (req, res) {
