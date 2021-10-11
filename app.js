@@ -27,8 +27,7 @@ mongoose
   .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    ssl: true,
-    retryWrites: true,
+    useCreateIndex: true,
   })
   .then(function () {
     console.log('MongoDb Connected...');
