@@ -23,23 +23,19 @@ require('./config/passport.js')(passport);
 const db = require('./config/keys').MongoURI;
 
 // Connect to MongoDB
-// mongoose
-//   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(function () {
-//     console.log('MongoDb Connected...');
-//   })
-//   .catch(function (err) {
-//     console.log(err);
-//   });
-
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
-const conn = mongoose.connection;
-mongoose.connection.once('open', () => {
-  console.log('MongoDB Connected');
-});
-mongoose.connection.on('error', (err) => {
-  console.log('MongoDB connection error: ', err);
-});
+mongoose
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true,
+    retryWrites: true,
+  })
+  .then(function () {
+    console.log('MongoDb Connected...');
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
 
 // Display static file
 app.use(express.static(__dirname + '/public'));
