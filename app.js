@@ -90,20 +90,20 @@ if (port == null || port == '') {
   port = 4000;
 }
 
-// // APP.LISTEN FOR HTTP
-// app.listen(port, function () {
-//   console.log('Server started successfully');
-// });
-
-// APP.LISTEN FOR HTTPS
-const sslserver = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'server.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'server.crt')),
-  },
-  app
-);
-
-sslserver.listen(port, function () {
+// APP.LISTEN FOR HTTP
+app.listen(port, function () {
   console.log('Server started successfully');
 });
+
+// // APP.LISTEN FOR HTTPS
+// const sslserver = https.createServer(
+//   {
+//     key: fs.readFileSync(path.join(__dirname, 'cert', 'server.key')),
+//     cert: fs.readFileSync(path.join(__dirname, 'cert', 'server.crt')),
+//   },
+//   app
+// );
+
+// sslserver.listen(port, function () {
+//   console.log('Server started successfully');
+// });
