@@ -151,7 +151,7 @@ body {
 
 @media (max-width: 800px) {
   .lead {
-    font-size: 1em !important;
+    font-size: 0.8em !important;
   }
 }
 
