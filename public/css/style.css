@@ -17,9 +17,9 @@ body {
 }
 
 @font-face {
-  font-family: "typewriter_-_remington_riviRg";
-  src: url("./fonts/remington__riviera__2007-webfont.woff2") format("woff2"),
-    url("./fonts/remington__riviera__2007-webfont.woff") format("woff");
+  font-family: 'typewriter_-_remington_riviRg';
+  src: url('./fonts/remington__riviera__2007-webfont.woff2') format('woff2'),
+    url('./fonts/remington__riviera__2007-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -77,8 +77,8 @@ body {
   margin: auto;
   padding: 1em;
   border-radius: 0.2em;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 1.3em;
   opacity: 0.7;
   z-index: 1;
@@ -90,8 +90,8 @@ body {
   background-color: white;
   margin: auto;
   padding: 1em;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 1.3em;
   background: none;
 }
@@ -142,7 +142,7 @@ body {
   padding-bottom: 0.3em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  font-family: "typewriter_-_remington_riviRg";
+  font-family: 'typewriter_-_remington_riviRg';
   border-radius: 0.5em;
   font-size: 0.8em !important;
   text-decoration: none;
@@ -192,7 +192,7 @@ body {
 /* iPhone SE */
 @media (max-width: 600px) {
   .greeting {
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     margin: auto;
     float: center;
