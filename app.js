@@ -37,7 +37,7 @@ mongoose
     console.log(err);
   });
 
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+// app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // Display static file
 app.use(express.static(__dirname + '/public'));
