@@ -84,13 +84,11 @@ app.use(function (req, res, next) {
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
-app.use(enforce.HTTPS());
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });
-
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.enable('trust proxy');
 
