@@ -34,6 +34,7 @@
     "express-sslify": "^1.2.0",
     "flash": "^1.1.0",
     "googleapis": "^65.0.0",
+    "heroku-ssl-redirect": "^0.1.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongoose": "^5.10.2",
