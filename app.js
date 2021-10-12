@@ -38,9 +38,6 @@ mongoose
   });
 
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
-http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
-});
 
 // Display static file
 app.use(express.static(__dirname + '/public'));
@@ -102,7 +99,7 @@ if (port == null || port == '') {
 }
 
 // APP.LISTEN FOR HTTP
-app.listen(port, function () {
+http.createServer(app).listen(port, function () {
   console.log('Server started successfully');
 });
 
