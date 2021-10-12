@@ -79,18 +79,17 @@ app.use(function (req, res, next) {
   next();
 });
 
-// TEMP
+app.enable('trust proxy');
+
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
-// app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });
-
-// app.enable('trust proxy');
 
 //Before using heroku - server running locally
 // const PORT = process.env.PORT || 3000;
