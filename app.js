@@ -37,7 +37,10 @@ mongoose
     console.log(err);
   });
 
-// app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
+http.createServer(app).listen(app.get('port'), function () {
+  console.log('Express server listening on port ' + app.get('port'));
+});
 
 // Display static file
 app.use(express.static(__dirname + '/public'));
@@ -86,10 +89,6 @@ app.enable('trust proxy');
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-
-// http.createServer(app).listen(app.get('port'), function () {
-//   console.log('Express server listening on port ' + app.get('port'));
-// });
 
 //Before using heroku - server running locally
 // const PORT = process.env.PORT || 3000;
