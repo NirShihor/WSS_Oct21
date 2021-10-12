@@ -16,6 +16,18 @@ const fs = require('fs'); //Required for https
 
 const app = express();
 
+app.get('*', function (req, res, next) {
+  if (
+    'https' !== req.headers['x-forwarded-proto'] &&
+    'production' === process.env.NODE_ENV
+  ) {
+    res.redirect('https://' + req.hostname + req.url);
+  } else {
+    app.use('/', require('./routes/index'));
+    app.use('/users', require('./routes/users'));
+    next();
+  }
+});
 // Passport config
 require('./config/passport.js')(passport);
 
@@ -80,8 +92,8 @@ app.use(function (req, res, next) {
 
 // TEMP
 // Routes
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+// app.use('/', require('./routes/index'));
+// app.use('/users', require('./routes/users'));
 
 app.enable('trust proxy');
 
