@@ -90,9 +90,7 @@ http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-// app.use(enforce.HTTPS({ trustAzureHeader: true }));
-
-app.use(enforce.HTTPS({ trustXForwardedHostHeader: true }));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.enable('trust proxy');
 
