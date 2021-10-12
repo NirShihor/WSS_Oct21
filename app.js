@@ -8,7 +8,6 @@ const passport = require('passport');
 const https = require('https'); //Required for https
 const http = require('http'); //Required for http
 const dotenv = require('dotenv');
-const enforce = require('express-sslify');
 
 dotenv.config();
 
@@ -36,10 +35,6 @@ mongoose
   .catch(function (err) {
     console.log(err);
   });
-
-if (app.get('env') === 'production') {
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
-}
 
 // Display static file
 app.use(express.static(__dirname + '/public'));
