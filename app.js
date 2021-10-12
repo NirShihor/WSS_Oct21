@@ -17,6 +17,7 @@ const fs = require('fs'); //Required for https
 
 const app = express();
 
+// app.use(sslRedirect());
 // Passport config
 require('./config/passport.js')(passport);
 
