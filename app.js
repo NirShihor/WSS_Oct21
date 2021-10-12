@@ -8,6 +8,7 @@ const passport = require('passport');
 const https = require('https'); //Required for https
 const http = require('http'); //Required for http
 const dotenv = require('dotenv');
+const enforce = require('express-sslify');
 
 dotenv.config();
 
@@ -83,10 +84,15 @@ app.use(function (req, res, next) {
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
-app.enable('trust proxy');
-app.use((req, res, next) => {
-  res.redirect('https://' + req.headers.host + req.url);
+app.use(enforce.HTTPS());
+
+http.createServer(app).listen(app.get('port'), function () {
+  console.log('Express server listening on port ' + app.get('port'));
 });
+
+app.use(enforce.HTTPS({ trustAzureHeader: true }));
+
+app.enable('trust proxy');
 
 //Before using heroku - server running locally
 // const PORT = process.env.PORT || 3000;
