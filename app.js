@@ -6,7 +6,7 @@ const flash = require('connect-flash');
 const session = require('cookie-session');
 const passport = require('passport');
 const https = require('https'); //Required for https
-const http = require('http'); //Required for https
+const http = require('http'); //Required for http
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -82,6 +82,11 @@ app.use(function (req, res, next) {
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+
+app.enable('trust proxy');
+app.use((req, res, next) => {
+  req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
+});
 
 //Before using heroku - server running locally
 // const PORT = process.env.PORT || 3000;
