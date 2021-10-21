@@ -253,29 +253,21 @@ router.post('/reset/:token', function (req, res) {
         );
       },
       function (user, done) {
-        var smtpTransport = nodemailer.createTransport({
-          service: 'Gmail',
-          auth: {
-            user: 'nirshihor@gmail.com',
-            pass: process.env.GMAILPW,
-          },
-        });
-        var mailOptions = {
+        const message = {
           to: user.email,
-          from: 'nirshihor@mail.com',
-          subject: 'Your password has been changed',
+          from: 'nirshihor@gmail.com',
+          subject: 'Successful WSS Password Reset',
           text:
             'Hello,\n\n' +
             'This is a confirmation that the password for your account ' +
             user.email +
             ' has just been changed.\n',
         };
-        smtpTransport.sendMail(mailOptions, function (err) {
-          req.flash(
-            'success_password_change',
-            'Success! Your password has been changed.'
-          );
-          done(err);
+
+        sgMail.send(message, function (req, err) {
+          console.log('mail sent');
+          req.flash('Password has been reset');
+          done(err, 'done');
         });
       },
     ],

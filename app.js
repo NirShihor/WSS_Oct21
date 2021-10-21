@@ -99,7 +99,7 @@ if (port == null || port == '') {
 
 // APP.LISTEN FOR HTTP
 app.listen(port, function () {
-  console.log('Server started successfully');
+  console.log(`Server started on port ${port}`);
 });
 
 // APP.LISTEN FOR HTTPS
